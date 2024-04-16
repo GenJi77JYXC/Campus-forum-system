@@ -50,4 +50,11 @@ import Menu from './menu/index.vue'
 .main {
     background-color: aqua;
 }
+.menu{
+    height: 100px;
+    width: auto;
+    border-color: red;
+    border-radius: 1px;
+    position: flex;
+}
 </style>
