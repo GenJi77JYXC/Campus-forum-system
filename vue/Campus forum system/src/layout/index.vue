@@ -7,33 +7,51 @@
             </el-header>
             <hr align=center width=100% color=#987cb9 SIZE=1>
             <Menu></Menu>
-            <Header></Header>
         </el-container>
-        <el-container class="bottom">
+        <el-container>
             <el-aside width="200px" class="aside">Aside</el-aside>
             <el-main class="main">Main</el-main>
         </el-container>
+
     </div>
 </template>
 
 <script setup lang="ts">
-import Header from './header/index.vue'
 import Menu from './menu/index.vue'
 
 </script>
 
 <style scoped>
-.common-layout {
+.el-carousel__item h3 {
+    display: flex;
+    color: #475669;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+}
 
+.el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+    background-color: #d3dce6;
+}
+
+.common-layout {
     background-color: palegreen;
     width: 100%;
     height: 100vh;
 }
 
+
 .header {
     display: flex;
     justify-content: center;
-    height: 300px;
+    height: 200px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 1px;
 }
 
 .header a {
@@ -42,19 +60,18 @@ import Menu from './menu/index.vue'
     line-height: 34px;
 }
 
+.carousel {
+    border-style: solid;
+    border-color: black;
+    border-radius: 1px;
+}
+
 .aside {
-    height: calc(100vh - 300px);
     background-color: bisque;
 }
 
 .main {
+
     background-color: aqua;
-}
-.menu{
-    height: 100px;
-    width: auto;
-    border-color: red;
-    border-radius: 1px;
-    position: flex;
 }
 </style>
