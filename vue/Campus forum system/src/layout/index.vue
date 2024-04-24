@@ -5,20 +5,30 @@
                 <a>登录</a>
                 <a>注册</a>
             </el-header>
-            <hr align=center width=100% color=#987cb9 SIZE=1>
+            <!-- <hr align=center width=100% color=#987cb9 SIZE=1> -->
+            <!-- <el-divider /> -->
             <Menu></Menu>
         </el-container>
         <el-container>
-            <el-aside width="200px" class="aside">Aside</el-aside>
-            <el-main class="main">Main</el-main>
+            <el-aside width="200px" class="aside"><HomeAside></HomeAside></el-aside>
+            <el-main class="main">
+                <Carousel></Carousel>
+            </el-main>
         </el-container>
 
     </div>
 </template>
 
 <script setup lang="ts">
+import Carousel from '@/components/Carousel.vue'
+import HomeAside from '@/components/HomeAside.vue';
 import Menu from './menu/index.vue'
+</script>
 
+<script lang="ts">
+export default {
+    name : "Layout",
+}
 </script>
 
 <style scoped>

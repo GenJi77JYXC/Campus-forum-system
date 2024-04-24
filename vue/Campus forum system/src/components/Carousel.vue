@@ -6,6 +6,10 @@
     </el-carousel>
 </template>
 
+<script setup lang="ts">
+
+</script>
+
 <style scoped>
 .el-carousel__item h3 {
     display: flex;
