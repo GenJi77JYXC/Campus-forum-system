@@ -1,0 +1,11 @@
+# server
+server:
+  port: 8080
+
+# mysql
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  database: campu-forum-system
+  username: root
+  password: Gen520

@@ -12,7 +12,8 @@
         <el-container>
             <el-aside width="200px" class="aside"><HomeAside></HomeAside></el-aside>
             <el-main class="main">
-                <Carousel></Carousel>
+                <MainTop></MainTop>
+                <MainContent></MainContent>
             </el-main>
         </el-container>
 
@@ -23,6 +24,8 @@
 import Carousel from '@/components/Carousel.vue'
 import HomeAside from '@/components/HomeAside.vue';
 import Menu from './menu/index.vue'
+import MainTop from '@/components/MainTop.vue';
+import MainContent from '@/components/MainContent.vue';
 </script>
 
 <script lang="ts">
