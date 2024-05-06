@@ -9,3 +9,11 @@ mysql:
   database: campu-forum-system
   username: root
   password: Gen520
+  max-idle-conns: 10
+  max-open-conns: 100
+
+# redis
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""

@@ -1,0 +1,338 @@
+html,
+body {
+    font-family: "SF Pro SC", "SF Pro Text", "SF Pro Icons", PingFang SC, Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    // background: #e5e5e5;
+    // background: #f7f7f7;
+    background: url(../bg.gif) repeat;
+    color: #222831;
+}
+
+.column{
+    padding: 3px !important
+}
+
+.main {
+    padding: 1rem 1rem;
+}
+
+.ellipsis {
+    white-space: nowrap; // 合并空白符，但阻止源码中的文本换行。
+    overflow: hidden; // 其设置了元素溢出时所需的行为——即当元素的内容太大而无法适应它的区块格式化上下文时。 hidden 隐藏超出的内容，
+    text-overflow: ellipsis; // 其设置了当文本溢出元素框时显示省略号。
+    // text-overflow CSS 属性用于确定如何提示用户存在隐藏的溢出内容。text-overflow 属性并不会强制“溢出”事件的发生，因此为了能让文本能够溢出容器，你需要在元素上添加几个额外的属性：overflow 和 white-space。
+}
+// 媒体查询 屏幕宽度小于768px时，main的padding改为0.5rem 0.5rem 0 !important;
+@media screen and (max-width: 768px) {
+    .main {
+        padding: 1rem 0.5rem 0 !important; // !important 与优先级无关，但它与最终的结果直接相关，使用一个 !important 规则时，此声明将覆盖任何其他声明。
+    }
+}
+
+.main-body,
+.main-aside {
+    background: #fff;
+    padding: 10px;
+    // &. 连接父元素和子元素的类名
+    &.no-bg {
+        background: none;
+    }
+}
+
+// main-container
+$sidebar-margin: 10px; // 侧边栏的外边距
+$sidebar-width: null;
+$main-content-width: null;
+$main-container-width: null;
+
+// @mixin 后面可以用 @include 调用
+// 计算页面宽度
+@mixin main-size($side-width) {
+    // 侧边栏宽度
+    $sidebar-width: $side-width;
+    // !global 声明全局变量，可以被其他样式文件使用
+    // 主栏目的宽度
+    $main-content-width: calc(
+        100% - #{$side-width} -#{$sidebar-margin}
+    );
+
+    &.left-main {
+        .left-container {
+            width: $main-container-width;
+        }
+
+        .right-container {
+            min-width: $sidebar-width;
+            max-width: $sidebar-width;
+        }
+    }
+
+    &.right-main {
+        .left-container {
+            min-width: $sidebar-width;
+            max-width: $sidebar-width;
+        }
+
+        .right-container {
+            width: $main-container-width;
+        }
+    }
+}
+
+.main-container {
+    display: flex;
+    // 默认宽度260
+    @include main-size(260px);
+    // 设定宽度320
+    &.size-320 {
+        @include main-size(320px);
+    }
+    // 设定宽度360
+    &.size-360 {
+        @include main-size(360px);
+    }
+
+    .main-content {
+        background-color: #fff;
+        padding: 0 10px 10px 10px; // 上 右 下 左
+        margin-bottom: 10px;
+
+        &.no-bg {
+            background: none;
+        }
+
+        .main-content-footer {
+            border-top: 1px solid #f2f5fa;
+            background: #f4f2f2;
+            padding: 5px 15px;
+            margin: 0 -10px -10px -10px; // 上 右 下 左
+        }
+
+        &.no-padding {
+            padding: 0;
+
+            .main-content-footer {
+                margin: 0;
+            }
+        }
+    }
+
+    .left-container,
+    .right-container {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        box-sizing: border-box; // box-sizing 属性定义了 user agent 应该如何计算一个元素的总宽度和总高度。
+        //border-box 告诉浏览器：你想要设置的边框和内边距的值是包含在 width 内的。也就是说，如果你将一个元素的 width 设为 100px，那么这 100px 会包含它的 border 和 padding，内容区的实际宽度是 width 减去 (border + padding) 的值。大多数情况下，这使得我们更容易地设定一个元素的宽高。
+        display: block; // 块级元素，该元素生成一个块级盒子，在正常的流中，该元素之前和之后产生换行
+    }
+
+    &.is-white.left-main{
+        .left-container {
+            background: #fff;
+            padding: 0 10px 10px 10px; // 上 右 下 左
+        }
+    }
+    &.is-white.right-main{
+        .right-container {
+            background: #fff;
+            padding: 0 10px 10px 10px; // 上 右 下 左
+        }
+    }
+
+    // 左侧大 右侧小
+    &.left-main {
+        @media screen and (max-width: 1024px) {
+            .left-container {
+                width: 100% !important;
+                margin-right: 0 !important;
+            }
+
+            .right-container {
+                display: none;
+            }
+        }
+
+        .left-container {
+            transition: width 0.2s; // 过渡效果
+        }
+
+        .right-container {
+            padding: 0;
+            margin-left: $sidebar-margin;
+        }
+    }
+    // 左侧小 右侧大
+    &.right-main {
+        @media screen and (max-width: 1024px) {
+            .right-container {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+
+            .left-container {
+                display: none;
+            }
+        }
+
+        .right-container {
+            transition: width 0.2s; // 过渡效果
+        }
+
+        .left-container {
+            padding: 0;
+            margin-right: $sidebar-margin;
+        }
+    }
+}
+
+.widget {
+    background: #fff;
+    padding: 0 12px;
+    margin-top: 10px;
+    border-radius: calc(.26rem - 1px); // border-radius 允许你设置元素的外边框圆角。
+
+    // & : nth-child(n)和& : nth-of-type(n) 表示选择特定位置的子元素或同类型元素用法
+    &:first-child {
+        margin: 0;
+    }
+
+    &.no-bg {
+        background: none;
+    }
+
+    &.no-margin {
+        margin: 0;
+    }
+    // 子代关系选择器是个大于号（>），只会在选择器选中直接子元素的时候匹配。继承关系上更远的后代则不会匹配。
+    & > .widget-header {
+        padding: 8px 0;
+        font-size: 16px;
+        font-weight: 700;
+
+        border-bottom: 1px solid #f1f1f1;
+
+        .slot {
+            float: right; // float CSS 属性指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它。
+            font-size: 80%;
+            font-weight: 400;
+        }
+
+        .delete {
+            float: right;
+        }
+    }
+
+    & > .widget-content {
+        padding: 8px 0;
+        word-break: break-all; // word-break 用于指定如何在长单词或 URL 中断行。
+        // break-all : 对于 non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行。
+    }
+
+
+    & > .widget-footer {
+        border-top: 1px dashed #ddd; // 虚线边框 dashed
+        padding: 10px 0;
+
+        &.is-right {
+            text-align: right; // text-align CSS 属性设置块元素或者单元格框的行内内容的水平对齐。 右对齐
+        }
+    }
+}
+
+img[lazy=loading] {
+    background-color: #e8e8e8;
+}
+
+img[lazy=error] {
+    background-color: #e8e8e8;
+}
+
+img[lazy=loaded] {
+    // your styles here
+}
+
+.footer {
+    background: #fff;
+    padding: 20px 0;
+
+    .hide {
+        a {
+            color: #efeaea;
+
+            &:hover {
+                color: #746f6f;
+            }
+        }
+    }
+}
+
+.button.post {
+    width: 100%;
+}
+
+.loading-animation {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    color: red;
+    vertical-align: middle; //  vertical-align 用来指定行内元素（inline）或表格单元格（table-cell）元素的垂直对齐方式。 注意 vertical-align 只对行内元素、行内块元素和表格单元格元素生效：不能用它垂直对齐块级元素。
+    // middle 使元素的中部与父元素的基线加上父元素 x-height ("x-height", 指的是字母'x'的高度。) 的一半对齐。 middle指的是基线往上1/2 "x-height"高度。我们可以近似脑补成字母x交叉点那个位置。
+    pointer-events: none; // pointer-events CSS 属性用于控制元素是否可以接收指针事件。none 表示元素不能接收任何指针事件。
+    position: relative; // position CSS 属性用于设置元素的定位类型。relative 表示元素相对于其正常位置进行定位。
+
+    &::before,
+    &::after {
+        content: "";
+        width: inherit; // inherit 关键字使得元素获取其父元素的计算值。
+        height: inherit;
+        border-radius: 50%;
+        background-color: currentColor; // currentColor 关键字表示元素的当前颜色。
+        opacity: 0.6; // 透明度
+        position: absolute; // position CSS 属性用于设置元素的定位类型。absolute 表示元素相对于最近的已定位祖先进行定位。
+        top: 0;
+        left: 0;
+        -webkit-animation: loading-animation 2s infinite ease-in-out; // 动画效果
+        animation: loading-animation 2s infinite ease-in-out; // 动画效果
+    }
+
+    .loading-animation::after {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
+    }
+
+    @-webkit-keyframes loading-animation {
+        0%,
+        100% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+
+        50% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+    @keyframes loading-animation {
+        0%,
+        100% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+
+        50% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+}
+
+.breadcrumb.my-breadcrumb {
+    padding: 10px 0;
+    margin: 0;
+    font-weight: 700;
+    border-bottom: 1px dashed #ddd;
+}
+
+span.search-highlight {
+    color: #CC0000;
+}

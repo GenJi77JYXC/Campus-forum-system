@@ -9,6 +9,7 @@ import 'element-plus/dist/index.css'
 import router from './router'
 import 'element-plus/es/components/message/style/css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import '@/assets/styles/main.scss'
 
 import mitt from 'mitt'
 
