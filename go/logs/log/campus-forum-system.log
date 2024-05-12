@@ -1,0 +1,9 @@
+2024-05-12T11:48:01.550+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-12T11:48:37.140+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-12T11:49:34.312+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-12T11:49:37.622+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-12T11:50:59.864+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-12T11:53:07.337+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-12T11:54:54.882+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-12T11:55:00.546+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-12T11:55:06.715+0800	INFO	middleware/middleware.go:63	The time cost is 0

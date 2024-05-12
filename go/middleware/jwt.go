@@ -16,11 +16,11 @@ type Claims struct {
 }
 
 // 发token
-func ReleaseToken(user model.User) (string, error) {
+func ReleaseToken(userID uint) (string, error) {
 	// 过期时间
-	expirationTime := time.Now().Add(24 * time.Hour * 7)
+	expirationTime := time.Now().Add(24 * time.Hour * time.Duration(model.TokenExpireDays))
 	claims := Claims{
-		UserID: user.ID,
+		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:  "Admin",
 			Subject: "user token",

@@ -35,6 +35,11 @@ func NowTimestamp() int64 {
 	return time.Now().UnixNano() / 1e6
 }
 
+// Timestamp返回t的时间戳
+func Timestamp(t time.Time) int64 {
+	return t.UnixNano() / 1e6
+}
+
 // 比较两个int64值大小，返回较小值
 func MinInt64(a int64, b int64) int64 {
 	if a < b {
