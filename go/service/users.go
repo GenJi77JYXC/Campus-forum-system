@@ -56,6 +56,7 @@ func (s *userService) SignUp(c *gin.Context) (*model.User, error) {
 	}
 	userInfo, err := repository.UserRepository.GetUserByEmail(database.GetDB(), req.Email)
 	if err != nil {
+		logs.Logger.Error("注册出错：", err)
 		return nil, errors.New("查询邮箱出错")
 	}
 	if userInfo.ID != 0 {
@@ -125,6 +126,17 @@ func (s *userService) loginByEmail(email string, password string) (*model.User, 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return nil, errors.New("密码错误")
 	}
+	userToken, err := repository.UserTokenRepository.UserStatusByToken(database.GetDB(), user.ID)
+	if err != nil {
+		// 当用户没有登录过时，user_token表中没有记录, 查询时会报错record not found，这里需要捕获这个错误, 表示用户没有登录过，可以正常登录
+		if err.Error() == "record not found" {
+			return user, nil
+		}
+		logs.Logger.Error("数据库查询token出错：", err)
+	}
+	if !userToken.Status {
+		return nil, errors.New("用户已在别处登录")
+	}
 	return user, nil
 }
 
@@ -135,6 +147,17 @@ func (s *userService) loginByUsername(username string, password string) (*model.
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return nil, errors.New("密码错误")
+	}
+	userToken, err := repository.UserTokenRepository.UserStatusByToken(database.GetDB(), user.ID)
+	if err != nil {
+		// 当用户没有登录过时，user_token表中没有记录, 查询时会报错record not found，这里需要捕获这个错误, 表示用户没有登录过，可以正常登录
+		if err.Error() == "record not found" {
+			return user, nil
+		}
+		logs.Logger.Error("数据库查询token出错：", err)
+	}
+	if !userToken.Status {
+		return nil, errors.New("用户已在别处登录")
 	}
 	return user, nil
 }

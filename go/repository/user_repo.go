@@ -50,25 +50,25 @@ func (r *userRepository) take(db *gorm.DB, column string, value interface{}) (*m
 		return nil, errors.New("用户不存在")
 	}
 
-	userId := result.ID
-	token := &model.UserToken{}
+	// userId := result.ID
+	// token := &model.UserToken{}
 
-	err = db.Where("user_id = ?", userId).Last(&token).Error
-	if err != nil {
-		// 当用户没有登录过时，user_token表中没有记录, 查询时会报错record not found，这里需要捕获这个错误, 表示用户没有登录过，可以正常登录
-		if err.Error() == "record not found" {
-			return result, nil
-		}
-		logs.Logger.Errorf("query db error:", err)
-		return nil, err
-	}
+	// err = db.Where("user_id = ?", userId).Last(&token).Error
+	// if err != nil {
+	// 	// 当用户没有登录过时，user_token表中没有记录, 查询时会报错record not found，这里需要捕获这个错误, 表示用户没有登录过，可以正常登录
+	// 	if err.Error() == "record not found" {
+	// 		return result, nil
+	// 	}
+	// 	logs.Logger.Errorf("query db error:", err)
+	// 	return nil, err
+	// }
 
-	if !token.Status {
-		// fmt.Println(result.Username)
-		logs.Logger.Errorf(result.Username, ":该用户在别处已经登录")
+	// if !token.Status {
+	// 	// fmt.Println(result.Username)
+	// 	logs.Logger.Errorf(result.Username, ":该用户在别处已经登录")
 
-		return nil, errors.New("该用户在别处已经登录")
-	}
+	// 	return nil, errors.New("该用户在别处已经登录")
+	// }
 
 	return result, nil
 }

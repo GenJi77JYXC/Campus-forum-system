@@ -23,6 +23,16 @@ func (r *userTokenRepository) UpdateStatusInvalidByToken(db *gorm.DB, token stri
 	return db.Model(&model.UserToken{}).Where("token = ?", token).Update("status", 1).Error
 }
 
+func (r *userTokenRepository) UserStatusByToken(db *gorm.DB, userId int64) (*model.UserToken, error) {
+	result := &model.UserToken{}
+	err := db.Where("user_id = ?", userId).Last(result).Error
+	if err != nil {
+		logs.Logger.Error("数据库查询token出错：", err)
+		return nil, err
+	}
+	return result, err
+}
+
 func (r *userTokenRepository) GetUserIDByToken(db *gorm.DB, token string) (*model.UserToken, error) {
 	if token == "" {
 		return nil, nil
@@ -34,6 +44,7 @@ func (r *userTokenRepository) take(db *gorm.DB, column string, value interface{}
 	result := &model.UserToken{}
 	// err := db.Where(column, value).Take(result).Error
 	err := db.Where(column, value).Find(&result).Error
+	// logs.Logger.Info("token_repo query result:", result)
 	if err != nil {
 		logs.Logger.Errorf("query db error:", err)
 		return nil, err
