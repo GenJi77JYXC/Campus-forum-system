@@ -120,7 +120,7 @@ func (s *userService) Login(c *gin.Context) (user *model.User, err error) {
 func (s *userService) loginByEmail(email string, password string) (*model.User, error) {
 	user, err := repository.UserRepository.GetUserByEmail(database.GetDB(), email)
 	if err != nil {
-		return nil, errors.New("此邮箱不存在")
+		return nil, err
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return nil, errors.New("密码错误")
@@ -131,7 +131,7 @@ func (s *userService) loginByEmail(email string, password string) (*model.User, 
 func (s *userService) loginByUsername(username string, password string) (*model.User, error) {
 	user, err := repository.UserRepository.GetUserByUsername(database.GetDB(), username)
 	if err != nil {
-		return nil, errors.New("此用户名不存在")
+		return nil, err
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return nil, errors.New("密码错误")

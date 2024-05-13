@@ -14,6 +14,7 @@ func main() {
 	config.ConfigInit()
 	logs.InitLogger("./logs/log", 1, 1, 2, false) // 在./logs/log目录下创建日志文件，日志文件最大为1M，保留最近3个日志文件，日志级别为debug，不输出到控制台
 	database.InitMysql()
+	// database.InitRedis()
 	defer database.CloseDB()
 
 	r := gin.Default()
