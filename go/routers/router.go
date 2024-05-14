@@ -61,7 +61,7 @@ func CollectRouter(r *gin.Engine) *gin.Engine {
 		user.POST("/user/login", guest.Login)
 		user.GET("/user/logout", guest.Logout)
 		user.GET("/user/info/:id", guest.GetUserInfo)
-		user.GET("/user/current", guest.GetCurrentUser) // 登录用户信息 5.12 测试到这里（这个地方有问题）发get请求时不论token对不对都会返回true
+		user.GET("/user/current", guest.GetCurrentUser) // 登录用户信息，发get请求时不论token对不对都会返回true,这个true表示的是请求是通的，如果toekn不对，value将是null，不会返回用户信息。
 		user.POST("/user/profile", guest.UpdateUserProfile)
 		// user.GET("/user/favorites", guest.GetUserFavorite)
 		user.POST("/user/set/username", guest.SetUsername)

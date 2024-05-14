@@ -71,3 +71,13 @@
 2024-05-13T10:49:39.678+0800	INFO	middleware/middleware.go:63	The time cost is 43
 2024-05-13T10:49:51.157+0800	INFO	middleware/middleware.go:63	The time cost is 0
 2024-05-13T10:49:58.210+0800	INFO	middleware/middleware.go:63	The time cost is 43
+2024-05-13T10:53:58.476+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-13T10:54:30.616+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-13T10:55:25.497+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-13T10:57:33.544+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-13T10:58:04.430+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-13T10:58:09.694+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-13T11:04:12.584+0800	ERROR	middleware/middleware.go:43	parse json error:json: cannot unmarshal string into Go struct field UpdateUserProfile.user_id of type int64
+2024-05-13T11:05:55.250+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-13T11:07:07.185+0800	INFO	middleware/middleware.go:63	The time cost is 3
+2024-05-13T11:07:15.325+0800	INFO	middleware/middleware.go:63	The time cost is 1
