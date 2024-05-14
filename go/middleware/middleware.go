@@ -36,7 +36,7 @@ func JSONRequestContextHandler(getAPIRequestModel GetAPIRequestModel) gin.Handle
 			req := getAPIRequestModel(c)
 			if req != nil {
 				// parse json to struct 通过BindJSON()可见将json请求体绑定到一个结构体上。
-				// BindJSON 函数的作用 BindJSON 函数的主要作用是将 Go 语言的数据结构转换为 JSON 格式。
+				// 通过 BindJSON () 可见将 json 请求体绑定到一个结构体上。。
 				if err = c.BindJSON(req); err == nil {
 					c.Set(model.CTXAPIReq, req)
 				} else {
