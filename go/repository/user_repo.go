@@ -22,11 +22,24 @@ func (r *userRepository) Create(db *gorm.DB, user *model.User) error {
 }
 
 func (r *userRepository) GetUserByEmail(db *gorm.DB, email string) (*model.User, error) {
-	return r.take(db, "email = ?", email)
+	result := &model.User{}
+	err := db.Where("email = ?", email).First(&result).Error
+	if err != nil {
+		logs.Logger.Errorf("query db error:", err)
+		return nil, errors.New("用户不存在")
+	}
+	return result, nil
 }
 
 func (r *userRepository) GetUserByUsername(db *gorm.DB, username string) (*model.User, error) {
-	return r.take(db, "username = ?", username)
+	result := &model.User{}
+	err := db.Where("username = ?", username).First(&result).Error
+	// logs.Logger.Info("query db result:", result)
+	if err != nil {
+		logs.Logger.Errorf("query db error:", err)
+		return nil, errors.New("用户不存在")
+	}
+	return result, nil
 }
 
 func (r *userRepository) GetUserByUserID(db *gorm.DB, userID int64) (*model.User, error) {

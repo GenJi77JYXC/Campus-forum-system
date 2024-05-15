@@ -81,3 +81,90 @@
 2024-05-13T11:05:55.250+0800	INFO	middleware/middleware.go:63	The time cost is 0
 2024-05-13T11:07:07.185+0800	INFO	middleware/middleware.go:63	The time cost is 3
 2024-05-13T11:07:15.325+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:46:41.024+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T11:49:14.249+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:50:40.767+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:51:22.501+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:51:29.029+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:51:35.685+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:51:58.658+0800	INFO	middleware/middleware.go:63	The time cost is 2
+2024-05-15T11:52:18.371+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:52:40.823+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:55:20.910+0800	INFO	middleware/middleware.go:63	The time cost is 57
+2024-05-15T11:55:26.539+0800	INFO	middleware/middleware.go:63	The time cost is 47
+2024-05-15T11:55:50.094+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:56:09.840+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:56:32.665+0800	INFO	middleware/middleware.go:63	The time cost is 3
+2024-05-15T11:56:41.763+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:57:07.587+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:57:49.537+0800	INFO	middleware/middleware.go:63	The time cost is 45
+2024-05-15T11:58:09.266+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T11:58:30.554+0800	INFO	middleware/middleware.go:63	The time cost is 2
+2024-05-15T11:58:31.962+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:58:39.355+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T11:59:10.786+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T12:47:36.196+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T12:49:00.940+0800	INFO	middleware/middleware.go:63	The time cost is 48
+2024-05-15T12:50:01.604+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T12:50:44.435+0800	INFO	middleware/middleware.go:63	The time cost is 4
+2024-05-15T12:50:52.553+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T12:53:22.432+0800	INFO	middleware/middleware.go:63	The time cost is 6
+2024-05-15T12:54:17.562+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T12:59:49.369+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T12:59:56.036+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:02:38.413+0800	INFO	middleware/middleware.go:63	The time cost is 53
+2024-05-15T13:02:56.118+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:02.565+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:23.629+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:27.661+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T13:03:32.585+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:37.361+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:42.140+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:03:49.859+0800	INFO	middleware/middleware.go:63	The time cost is 57
+2024-05-15T13:03:56.703+0800	INFO	middleware/middleware.go:63	The time cost is 60
+2024-05-15T13:04:02.423+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:04:06.657+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:04:22.460+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:06:06.551+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T13:06:23.709+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:07:23.776+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:07:29.824+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:07:36.310+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:08:20.806+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:08:48.703+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:08:53.993+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:09:48.624+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:09:54.165+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:09:57.677+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:11:01.406+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:11:08.211+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T13:11:35.461+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:11:39.894+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:16:09.235+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:16:15.863+0800	INFO	repository/user_repo.go:31	query db result:&{{0}       false  0 0 0 0 0 0 0    0 0 0}
+2024-05-15T13:16:15.863+0800	ERROR	repository/user_repo.go:33	query db error:%!(EXTRA *errors.errorString=record not found)
+2024-05-15T13:16:15.863+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T13:18:11.108+0800	INFO	repository/user_repo.go:31	query db result:&{{0}       false  0 0 0 0 0 0 0    0 0 0}
+2024-05-15T13:18:11.108+0800	ERROR	repository/user_repo.go:33	query db error:%!(EXTRA *errors.errorString=record not found)
+2024-05-15T13:18:11.109+0800	INFO	middleware/middleware.go:63	The time cost is 2
+2024-05-15T13:18:20.262+0800	INFO	repository/user_repo.go:31	query db result:&{{1} genji_77 源氏 $2a$10$EdADHTKt2jKv3YXMo51Zo.ZgU16CGUVk8/S.n5k5KKFQLmr8.qT8e https://robohash.org/2aea26d12e96c68bc20ae3d14d748a78?set=set4 2 1612977482@qq.com false 超级喜欢半泽由里子 0 0 0 0 0 0 0    1715484852727 0 0}
+2024-05-15T13:18:20.311+0800	INFO	middleware/middleware.go:63	The time cost is 50
+2024-05-15T13:18:35.444+0800	INFO	repository/user_repo.go:31	query db result:&{{1} genji_77 源氏 $2a$10$EdADHTKt2jKv3YXMo51Zo.ZgU16CGUVk8/S.n5k5KKFQLmr8.qT8e https://robohash.org/2aea26d12e96c68bc20ae3d14d748a78?set=set4 2 1612977482@qq.com false 超级喜欢半泽由里子 0 0 0 0 0 0 0    1715484852727 0 0}
+2024-05-15T13:18:35.493+0800	INFO	middleware/middleware.go:63	The time cost is 49
+2024-05-15T13:19:17.825+0800	INFO	middleware/middleware.go:63	The time cost is 1
+2024-05-15T13:19:20.656+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:19:33.357+0800	INFO	middleware/middleware.go:63	The time cost is 55
+2024-05-15T13:19:43.600+0800	INFO	middleware/middleware.go:63	The time cost is 53
+2024-05-15T13:19:48.131+0800	INFO	repository/user_repo.go:31	query db result:&{{1} genji_77 源氏 $2a$10$rllmhUxrmjBEpxZI.vi7t.zBc/576sfJkRAGuCbYDRz2rY/SkaRkW https://robohash.org/2aea26d12e96c68bc20ae3d14d748a78?set=set4 2 1612977482@qq.com false 超级喜欢半泽由里子 0 0 0 0 0 0 0    1715484852727 0 0}
+2024-05-15T13:19:48.178+0800	INFO	middleware/middleware.go:63	The time cost is 47
+2024-05-15T13:19:53.270+0800	INFO	repository/user_repo.go:31	query db result:&{{1} genji_77 源氏 $2a$10$rllmhUxrmjBEpxZI.vi7t.zBc/576sfJkRAGuCbYDRz2rY/SkaRkW https://robohash.org/2aea26d12e96c68bc20ae3d14d748a78?set=set4 2 1612977482@qq.com false 超级喜欢半泽由里子 0 0 0 0 0 0 0    1715484852727 0 0}
+2024-05-15T13:19:53.319+0800	INFO	middleware/middleware.go:63	The time cost is 49
+2024-05-15T13:22:30.222+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-15T13:23:30.464+0800	ERROR	repository/user_repo.go:28	query db error:%!(EXTRA *errors.errorString=record not found)
+2024-05-15T13:23:30.464+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-15T13:23:44.769+0800	INFO	middleware/middleware.go:63	The time cost is 44
+2024-05-15T13:23:50.358+0800	INFO	middleware/middleware.go:63	The time cost is 42
+2024-05-15T13:23:56.765+0800	INFO	middleware/middleware.go:63	The time cost is 42
+2024-05-15T13:27:09.730+0800	INFO	middleware/middleware.go:63	The time cost is 108
+2024-05-15T13:27:16.667+0800	INFO	middleware/middleware.go:63	The time cost is 49
+2024-05-15T13:27:43.203+0800	INFO	middleware/middleware.go:63	The time cost is 53

@@ -112,6 +112,7 @@ type UserBriefInfo struct {
 	Username              string `json:"username"`
 	Nickname              string `json:"nickname"`
 	AvatarURL             string `json:"avatar_url"`
+	Email                 string `json:"email"`
 	Gender                string `json:"gender"`
 	Description           string `json:"description"`
 	AttentionCount        int    `json:"attention_count"`

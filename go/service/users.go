@@ -120,6 +120,9 @@ func (s *userService) Login(c *gin.Context) (user *model.User, err error) {
 
 func (s *userService) loginByEmail(email string, password string) (*model.User, error) {
 	user, err := repository.UserRepository.GetUserByEmail(database.GetDB(), email)
+	if user == nil {
+		return nil, errors.New("没有用该邮箱注册的用户")
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -142,6 +145,10 @@ func (s *userService) loginByEmail(email string, password string) (*model.User, 
 
 func (s *userService) loginByUsername(username string, password string) (*model.User, error) {
 	user, err := repository.UserRepository.GetUserByUsername(database.GetDB(), username)
+	if user == nil {
+		return nil, errors.New("用户名不存在")
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -298,6 +305,7 @@ func BuildUserBriefInfo(user *model.User) *model.UserBriefInfo {
 		Username:              user.Username,
 		Nickname:              user.Nickname,
 		AvatarURL:             user.AvatarURL,
+		Email:                 user.Email,
 		Gender:                user.Gender,
 		Description:           user.Description,
 		AttentionCount:        user.AttentionCount,
