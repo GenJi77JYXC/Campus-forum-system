@@ -168,3 +168,22 @@
 2024-05-15T13:27:09.730+0800	INFO	middleware/middleware.go:63	The time cost is 108
 2024-05-15T13:27:16.667+0800	INFO	middleware/middleware.go:63	The time cost is 49
 2024-05-15T13:27:43.203+0800	INFO	middleware/middleware.go:63	The time cost is 53
+2024-05-18T10:06:03.006+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-18T10:12:03.330+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-18T10:12:36.192+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-18T10:13:01.177+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-18T10:31:28.835+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-18T10:31:41.807+0800	INFO	middleware/middleware.go:63	The time cost is 0
+2024-05-18T10:41:20.284+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-18T10:41:31.126+0800	INFO	middleware/middleware.go:63	The time cost is 41
+2024-05-18T10:41:51.941+0800	INFO	middleware/middleware.go:63	The time cost is 41
+2024-05-18T10:42:01.650+0800	INFO	middleware/middleware.go:63	The time cost is 4
+2024-05-18T10:43:04.620+0800	INFO	middleware/middleware.go:63	The time cost is 46
+2024-05-18T10:44:13.470+0800	INFO	guest/articles.go:24	&{1 第一篇文章 hello， world}
+2024-05-18T10:44:13.484+0800	INFO	middleware/middleware.go:63	The time cost is 15
+2024-05-18T10:46:06.696+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-18T10:46:15.135+0800	INFO	database/mysql.go:51	数据库初始化完成
+2024-05-18T10:46:50.633+0800	INFO	guest/articles.go:24	&{1 第一篇文章 hello， world}
+2024-05-18T10:46:50.640+0800	INFO	middleware/middleware.go:63	The time cost is 7
+2024-05-18T10:47:22.785+0800	INFO	guest/articles.go:24	&{1 第一篇文章 hello， world}
+2024-05-18T10:47:22.790+0800	INFO	middleware/middleware.go:63	The time cost is 5

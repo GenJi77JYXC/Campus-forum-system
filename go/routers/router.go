@@ -68,6 +68,19 @@ func CollectRouter(r *gin.Engine) *gin.Engine {
 		user.POST("/user/set/email", guest.SetEmail)
 		user.POST("/user/set/password", guest.SetPassword)
 		user.POST("/user/update/password", guest.UpdatePassword)
+
+		user.POST("/topics", guest.PostArticle)
+		user.GET("/topics", guest.GetArticleList)
+		user.GET("/topics/:id", guest.GetArticleByID)
+		user.POST("/topics/like", guest.PostLikeArticle)
+		user.POST("/topics/del_like", guest.PostDelLikeArticle)
+		user.POST("/topics/favorite", guest.PostFavoriteArticle)
+		user.POST("/topics/del_favorite", guest.PostDelFavoriteArticle)
+
+		user.POST("/comments", guest.PostComment)
+		user.GET("/comments", guest.GetComments)
+
+		user.GET("/test", guest.TestForUser)
 	}
 
 	return r

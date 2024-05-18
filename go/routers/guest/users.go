@@ -11,8 +11,13 @@ import (
 
 // GetCurrentUser ...
 func GetCurrentUser(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
+	user, err := service.UserService.GetCurrentUser(c)
+	if user == nil || err != nil {
+		setAPIResponse(c, nil, err.Error(), false)
+		return
+	}
 	setAPIResponse(c, user, "", true)
+
 }
 
 // GetUserInfo ...

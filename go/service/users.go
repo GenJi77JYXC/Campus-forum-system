@@ -23,22 +23,27 @@ func newUserService() *userService {
 }
 
 // GetCurrentUser ...
-func (s *userService) GetCurrentUser(c *gin.Context) *model.User {
+func (s *userService) GetCurrentUser(c *gin.Context) (*model.User, error) {
 	token := s.GetToken(c)
 	userToken, err := repository.UserTokenRepository.GetUserIDByToken(database.GetDB(), token)
 	if err != nil {
-		logs.Logger.Errorf("数据库查询token出错")
-		return nil
+		logs.Logger.Errorf(err.Error())
+		return nil, err
 	}
 	if userToken == nil || userToken.Status || userToken.ExpiredAt < util.NowTimestamp() { // 不存在或者过期了
-		return nil
+		err := repository.UserTokenRepository.UpdateStatusInvalidByToken(database.GetDB(), userToken.Token)
+
+		if err != nil {
+			logs.Logger.Error("更新token状态出错：", err)
+		}
+		return nil, errors.New("token过期:请重新登录")
 	}
 	user, err := repository.UserRepository.GetUserByUserID(database.GetDB(), userToken.UserID)
 	if err != nil {
 		logs.Logger.Errorf("数据库查询user出错")
-		return nil
+		return nil, errors.New("用户不存在")
 	}
-	return user
+	return user, nil
 }
 
 // 从请求头中获取token
@@ -203,9 +208,12 @@ func (s *userService) GetUserInfo(userID int64) (*model.UserBriefInfo, error) {
 }
 
 func (s *userService) UpdateUserProfile(c *gin.Context) error {
-	user := s.GetCurrentUser(c)
+	user, err1 := s.GetCurrentUser(c)
 	if user == nil {
 		return errors.New("当前未登录！")
+	}
+	if err1 != nil {
+		return errors.New("登录信息过期，请重新登录！")
 	}
 	req := getReqFromContext(c).(*model.UpdateUserProfile)
 	if user.ID != req.UserID {
@@ -224,9 +232,12 @@ func (s *userService) UpdateUserProfile(c *gin.Context) error {
 }
 
 func (s *userService) SetUsername(c *gin.Context) error {
-	user := s.GetCurrentUser(c)
+	user, err1 := s.GetCurrentUser(c)
 	if user == nil {
 		return errors.New("当前未登录！")
+	}
+	if err1 != nil {
+		return errors.New("登录信息过期，请重新登录！")
 	}
 	req := getReqFromContext(c).(*model.SetUsernameRequest)
 	if !util.CheckUsername(req.Username) {
@@ -241,9 +252,12 @@ func (s *userService) SetUsername(c *gin.Context) error {
 }
 
 func (s *userService) SetEmail(c *gin.Context) error {
-	user := s.GetCurrentUser(c)
+	user, err1 := s.GetCurrentUser(c)
 	if user == nil {
 		return errors.New("当前未登录！")
+	}
+	if err1 != nil {
+		return errors.New("登录信息过期，请重新登录！")
 	}
 	req := getReqFromContext(c).(*model.SetEmailRequest)
 	if !util.CheckEmail(req.Email) {
@@ -258,9 +272,12 @@ func (s *userService) SetEmail(c *gin.Context) error {
 }
 
 func (s *userService) SetPassword(c *gin.Context) error {
-	user := s.GetCurrentUser(c)
+	user, err1 := s.GetCurrentUser(c)
 	if user == nil {
 		return errors.New("当前未登录！")
+	}
+	if err1 != nil {
+		return errors.New("登录信息过期，请重新登录！")
 	}
 	req := getReqFromContext(c).(*model.SetPasswordRequest)
 	if !util.CheckPassword(req.Password) {
@@ -276,9 +293,12 @@ func (s *userService) SetPassword(c *gin.Context) error {
 }
 
 func (s *userService) UpdatePassword(c *gin.Context) error {
-	user := s.GetCurrentUser(c)
+	user, err1 := s.GetCurrentUser(c)
 	if user == nil {
 		return errors.New("当前未登录！")
+	}
+	if err1 != nil {
+		return errors.New("登录信息过期，请重新登录！")
 	}
 	req := getReqFromContext(c).(*model.UpdatePasswordRequest)
 	if !util.CheckPassword(req.Password) {

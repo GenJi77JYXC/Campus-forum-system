@@ -36,7 +36,7 @@ func (s *articleService) PostArticle(user *model.User, title string, content str
 		if err != nil {
 			return err
 		}
-		err = database.GetDB().Exec("update user set post_count = post_count+1 where id = ?", user.ID).Error
+		err = database.GetDB().Exec("update users set post_count = post_count+1 where id = ?", user.ID).Error
 		return err
 	})
 	if err != nil {

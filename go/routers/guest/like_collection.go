@@ -11,9 +11,9 @@ import (
 
 // 点赞文章
 func PostLikeArticle(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
-	if user == nil {
-		setAPIResponse(c, nil, "请先登录", false)
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
 		return
 	}
 	req := getReqFromContext(c).(*model.LikeArticleRequest)
@@ -33,9 +33,9 @@ func PostLikeArticle(c *gin.Context) {
 
 // 取消点赞文章
 func PostDelLikeArticle(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
-	if user == nil {
-		setAPIResponse(c, nil, "请先登录", false)
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
 		return
 	}
 	req := getReqFromContext(c).(*model.LikeArticleRequest)
@@ -53,9 +53,9 @@ func PostDelLikeArticle(c *gin.Context) {
 
 // 收藏文章
 func PostFavoriteArticle(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
-	if user == nil {
-		setAPIResponse(c, nil, "请先登录", false)
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
 		return
 	}
 
@@ -74,9 +74,9 @@ func PostFavoriteArticle(c *gin.Context) {
 
 // 取消收藏文章
 func PostDelFavoriteArticle(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
-	if user == nil {
-		setAPIResponse(c, nil, "请先登录", false)
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
 		return
 	}
 
@@ -95,9 +95,9 @@ func PostDelFavoriteArticle(c *gin.Context) {
 
 // 查看用户收藏
 func GetUserFavorite(c *gin.Context) {
-	user := service.UserService.GetCurrentUser(c)
-	if user == nil {
-		setAPIResponse(c, nil, "请先登录！", false)
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
 		return
 	}
 	var err error

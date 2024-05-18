@@ -3,6 +3,7 @@ package repository
 import (
 	"Campus-forum-system/logs"
 	"Campus-forum-system/model"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -35,7 +36,7 @@ func (r *userTokenRepository) UserStatusByToken(db *gorm.DB, userId int64) (*mod
 
 func (r *userTokenRepository) GetUserIDByToken(db *gorm.DB, token string) (*model.UserToken, error) {
 	if token == "" {
-		return nil, nil
+		return nil, errors.New("token不能为空")
 	}
 	return r.take(db, "token = ?", token)
 }
