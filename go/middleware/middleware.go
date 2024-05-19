@@ -4,6 +4,7 @@ import (
 	"Campus-forum-system/logs"
 	"Campus-forum-system/model"
 	"bytes"
+	"fmt"
 	"io"
 	"time"
 
@@ -34,6 +35,9 @@ func JSONRequestContextHandler(getAPIRequestModel GetAPIRequestModel) gin.Handle
 			c.Set(model.CTXAPIURLParams, params)
 			c.Set(model.CTXAPICacheBody, requestBody)
 			req := getAPIRequestModel(c)
+			fmt.Println(c.Request.URL.Path)
+			fmt.Println(requestBody)
+			fmt.Println("req:", req)
 			if req != nil {
 				// parse json to struct 通过BindJSON()可见将json请求体绑定到一个结构体上。
 				// 通过 BindJSON () 可见将 json 请求体绑定到一个结构体上。。

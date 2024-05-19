@@ -37,12 +37,12 @@ func (s *commentService) BuildComment(userID, articleID, parentID int64, content
 			return err
 		}
 		// update article comment count
-		err = database.GetDB().Exec("update article set comment_count = comment_count + 1 where id = ? and user_id = ?", articleID, userID).Error
+		err = database.GetDB().Exec("update articles set comment_count = comment_count + 1 where id = ? and user_id = ?", articleID, userID).Error
 		if err != nil {
 			return err
 		}
 		// update user comment count
-		err = database.GetDB().Exec("update user set comment_count = comment_count + 1 where id = ?", userID).Error
+		err = database.GetDB().Exec("update users set comment_count = comment_count + 1 where id = ?", userID).Error
 		if err != nil {
 			return err
 		}
@@ -161,4 +161,82 @@ func (pw commentWrapper) Less(i, j int) bool { // rewrite Less()
 func sortComments(comments []model.Comment, by sortBy) {
 	sort.Sort(commentWrapper{comments, by}) // Sort按Less方法确定的升序对数据进行排序。它会调用一次数据。Len来确定n和O(n*log(n))对data的调用。少和数据交换。排序不能保证是稳定的。
 
+}
+
+// 点赞评论
+func (s *commentService) LikeComment(commentID, userID int64) (*model.UserLikeCommentResponse, error) {
+	// 先判断是否已经点赞过
+	flag, err := repository.LCRepository.IsLikeComment(database.GetDB(), commentID, userID)
+	if flag || err != nil {
+		return nil, errors.New("已经点赞过了")
+	}
+
+	err = repository.LCRepository.CreateCommentLike(database.GetDB(), commentID, userID)
+	if err != nil {
+		logs.Logger.Errorf("点赞评论失败：%v", err)
+		return nil, errors.New("点赞评论失败")
+	}
+
+	return &model.UserLikeCommentResponse{
+		CommentID: commentID,
+		UserID:    userID,
+		Status:    true,
+	}, nil
+}
+
+// 取消点赞评论
+func (s *commentService) UnlikeComment(commentID, userID int64) (*model.UserLikeCommentResponse, error) {
+	// 先判断是否已经点赞过
+	flag, err := repository.LCRepository.IsLikeComment(database.GetDB(), commentID, userID)
+	if !flag || err != nil {
+		return nil, errors.New("未点赞过")
+	}
+
+	err = repository.LCRepository.CancelCommentLike(database.GetDB(), commentID, userID)
+	if err != nil {
+		logs.Logger.Errorf("取消点赞评论失败：%v", err)
+		return nil, errors.New("取消点赞评论失败")
+	}
+
+	return &model.UserLikeCommentResponse{
+		CommentID: commentID,
+		UserID:    userID,
+		Status:    false,
+	}, nil
+
+}
+
+// 删除评论
+func (s *commentService) DeleteComment(commentID, userID int64) error {
+	comment, err := repository.CommentRepository.GetCommentsByCommentID(database.GetDB(), commentID)
+	if err != nil {
+		logs.Logger.Errorf("查询评论信息出错")
+		return errors.New("查询评论信息出错")
+	}
+	if comment.UserID != userID {
+		return errors.New("只能删除自己的评论")
+	}
+	err = database.GetDB().Transaction(func(tx *gorm.DB) error {
+		// 删除评论
+		err = repository.CommentRepository.DeleteCommentByID(tx, commentID)
+		if err != nil {
+			return err
+		}
+		// 更新文章评论数
+		err = tx.Exec("update articles set comment_count = comment_count - 1 where id = ? and user_id = ?", comment.ArticleID, comment.UserID).Error
+		if err != nil {
+			return err
+		}
+		// 更新用户评论数
+		err = tx.Exec("update users set comment_count = comment_count - 1 where id = ?", comment.UserID).Error
+		if err != nil {
+			return err
+		}
+		return err
+	})
+	if err != nil {
+		logs.Logger.Errorf("删除评论失败：%v", err)
+		return errors.New("删除评论失败")
+	}
+	return nil
 }

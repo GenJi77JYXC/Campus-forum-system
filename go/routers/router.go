@@ -49,6 +49,8 @@ func CollectRouter(r *gin.Engine) *gin.Engine {
 			return new(model.FavoriteArticleRequest)
 		} else if c.Request.URL.Path == "/api/topics/del_favorite" {
 			return new(model.FavoriteArticleRequest)
+		} else if c.Request.URL.Path == "/api/topics/update" {
+			return new(model.UpdateArticleRequest)
 		}
 		return nil
 	}))
@@ -76,9 +78,16 @@ func CollectRouter(r *gin.Engine) *gin.Engine {
 		user.POST("/topics/del_like", guest.PostDelLikeArticle)
 		user.POST("/topics/favorite", guest.PostFavoriteArticle)
 		user.POST("/topics/del_favorite", guest.PostDelFavoriteArticle)
+		// 还要写删除文章和修改文章
+		user.DELETE("/topics/:id", guest.DeleteArticleByID)
+		user.POST("/topics/update", guest.UpdateArticleByID)
 
 		user.POST("/comments", guest.PostComment)
 		user.GET("/comments", guest.GetComments)
+		// 还需要写 点赞评论，删除评论，
+		user.GET("/comments/like", guest.GetLikeComments)
+		user.GET("/comments/unlike", guest.CancelCommentLike)
+		user.DELETE("/comments/del", guest.DeleteCommentByID)
 
 		user.GET("/test", guest.TestForUser)
 	}

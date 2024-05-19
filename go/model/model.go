@@ -7,6 +7,7 @@ var modelList = []interface{}{
 	&Comment{},
 	&UserLikeArticle{},
 	&UserFavoriteArticle{},
+	&UserLikeComment{},
 }
 
 // Model ...
@@ -63,7 +64,7 @@ type Article struct {
 	Model
 	UserID       int64  `gorm:"column:user_id;type:int" json:"user_id"`                       //作者ID
 	Title        string `gorm:"column:title;type:varchar(50);not null" json:"title"`          //标题
-	Status       int    `gorm:"column:status;type:tinyint;not null;default:0" json:"status"`  //文章状态
+	Status       int    `gorm:"column:status;type:tinyint;not null;default:0" json:"status"`  //文章状态  可以用于管理员审核
 	Content      string `gorm:"column:content;type:text" json:"content"`                      //内容
 	ViewCount    int    `gorm:"column:view_count;type:int;default:0" json:"view_count"`       //浏览数
 	CommentCount int    `gorm:"column:comment_count;type:int;default:0" json:"comment_count"` //评论数
@@ -92,6 +93,15 @@ type UserLikeArticle struct {
 	Model
 	UserID     int64 `gorm:"column:user_id;type:int" json:"user_id"`
 	ArticleID  int64 `gorm:"column:article_id;type:int" json:"article_id"`
+	Status     int   `gorm:"column:status;type:tinyint;not null;default:0" json:"status"` //是否点赞 1已点赞，0未点赞
+	UpdateTime int64 `gorm:"column:update_time;default:null" json:"update_time"`
+}
+
+// UserLikeComment 用户点赞评论
+type UserLikeComment struct {
+	Model
+	UserID     int64 `gorm:"column:user_id;type:int" json:"user_id"`
+	CommentID  int64 `gorm:"column:comment_id;type:int" json:"comment_id"`
 	Status     int   `gorm:"column:status;type:tinyint;not null;default:0" json:"status"` //是否点赞 1已点赞，0未点赞
 	UpdateTime int64 `gorm:"column:update_time;default:null" json:"update_time"`
 }

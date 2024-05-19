@@ -32,12 +32,12 @@ func SubString(str string, start int, end int) string {
 
 // 获取当前时间戳
 func NowTimestamp() int64 {
-	return time.Now().UnixNano() / 1e6
+	return time.Now().UnixNano() / 1e6 //时间戳（毫秒）
 }
 
 // Timestamp返回t的时间戳
 func Timestamp(t time.Time) int64 {
-	return t.UnixNano() / 1e6
+	return t.UnixNano() / 1e6 //时间戳（毫秒）
 }
 
 // 比较两个int64值大小，返回较小值

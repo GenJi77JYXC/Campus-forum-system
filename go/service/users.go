@@ -28,7 +28,7 @@ func (s *userService) GetCurrentUser(c *gin.Context) (*model.User, error) {
 	userToken, err := repository.UserTokenRepository.GetUserIDByToken(database.GetDB(), token)
 	if err != nil {
 		logs.Logger.Errorf(err.Error())
-		return nil, err
+		return nil, errors.New("当前未登录")
 	}
 	if userToken == nil || userToken.Status || userToken.ExpiredAt < util.NowTimestamp() { // 不存在或者过期了
 		err := repository.UserTokenRepository.UpdateStatusInvalidByToken(database.GetDB(), userToken.Token)
@@ -142,6 +142,15 @@ func (s *userService) loginByEmail(email string, password string) (*model.User, 
 		}
 		logs.Logger.Error("数据库查询token出错：", err)
 	}
+	// token过期，更新数据库数据
+	if userToken.ExpiredAt < util.NowTimestamp() {
+		err := repository.UserTokenRepository.UpdateStatusInvalidByToken(database.GetDB(), userToken.Token)
+		if err != nil {
+			logs.Logger.Error("更新token状态出错：", err)
+			return nil, errors.New("数据库操作出错")
+		}
+		return user, nil
+	}
 	if !userToken.Status {
 		return nil, errors.New("用户已在别处登录")
 	}
@@ -167,6 +176,15 @@ func (s *userService) loginByUsername(username string, password string) (*model.
 			return user, nil
 		}
 		logs.Logger.Error("数据库查询token出错：", err)
+	}
+	// token过期，更新数据库数据
+	if userToken.ExpiredAt < util.NowTimestamp() {
+		err := repository.UserTokenRepository.UpdateStatusInvalidByToken(database.GetDB(), userToken.Token)
+		if err != nil {
+			logs.Logger.Error("更新token状态出错：", err)
+			return nil, errors.New("数据库操作出错")
+		}
+		return user, nil
 	}
 	if !userToken.Status {
 		return nil, errors.New("用户已在别处登录")

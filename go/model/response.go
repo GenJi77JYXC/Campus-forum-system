@@ -81,6 +81,13 @@ type CommentInfo struct {
 	CreateTime     int64        `json:"create_time"`
 }
 
+// UserLikeCommentResponse ...
+type UserLikeCommentResponse struct {
+	CommentID int64 `json:"comment_id"`
+	UserID    int64 `json:"user_id"`
+	Status    bool  `json:"status"` // true: 点赞, false: 取消点赞
+}
+
 // FavoriteResponse ...
 type FavoriteResponse struct {
 	TotalNum     int                 `json:"total_num"`     // 文章总数

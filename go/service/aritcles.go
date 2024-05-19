@@ -113,3 +113,50 @@ func (s *articleService) BuildArticleList(currentUser *model.User, articles []mo
 
 	return briefList, minCursorTime
 }
+
+// 删除文章
+func (s *articleService) DeleteByArticleID(user *model.User, articleID int64) error {
+	err := database.GetDB().Transaction(func(tx *gorm.DB) error {
+		var err error
+		article, err1 := repository.ArticleRepository.GetArticleByID(database.GetDB(), articleID)
+		if article.ID == 0 {
+			return errors.New("文章不存在")
+		}
+		if err1 != nil {
+			return err1
+		}
+		if article.UserID != user.ID {
+			return errors.New("无权限")
+		}
+		err = repository.ArticleRepository.DeleteArticleByID(database.GetDB(), articleID)
+		if err != nil {
+			return err
+		}
+		err = database.GetDB().Exec("update users set post_count = post_count-1 where id = ?", user.ID).Error
+		return err
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// 更新文章
+func (s *articleService) UpdateArticle(user *model.User, articleID int64, title string, content string) error {
+	var err error
+	article, err1 := repository.ArticleRepository.GetArticleByID(database.GetDB(), articleID)
+	if article.ID == 0 {
+		return errors.New("文章不存在")
+	}
+	if err1 != nil {
+		return err1
+	}
+	if article.UserID != user.ID {
+		return errors.New("无权限")
+	}
+	err = repository.ArticleRepository.UpdateArticleByID(database.GetDB(), articleID, title, content)
+	if err != nil {
+		return err
+	}
+	return nil
+}

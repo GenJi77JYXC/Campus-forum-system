@@ -3,6 +3,7 @@ package repository
 import (
 	"Campus-forum-system/logs"
 	"Campus-forum-system/model"
+	"Campus-forum-system/util"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -77,4 +78,76 @@ func (r *lcRepository) GetFavoriteRecords(db *gorm.DB, userID int64, cursorTime 
 
 	db.Where("update_time < ? and user_id = ?", cursorTime, userID).Order(fmt.Sprintf("%s %s", sortby, order)).Where("status = ?", 1).Limit(limit).Find(&records)
 	return records
+}
+
+// 用户点赞评论
+func (r *lcRepository) CreateCommentLike(db *gorm.DB, CommentID, userID int64) error {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		op := &model.UserLikeComment{
+			CommentID:  CommentID,
+			UserID:     userID,
+			UpdateTime: util.NowTimestamp(),
+			Status:     1,
+		}
+		if err := tx.Create(op).Error; err != nil {
+			return err
+		}
+		comment := &model.Comment{}
+		if err := tx.Model(&model.Comment{}).Where("id = ?", CommentID).Find(comment).Error; err != nil {
+			return err
+		}
+		comment.LikeCount++
+		if err := tx.Model(&model.Comment{}).Where("id = ?", CommentID).Updates(comment).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	return err
+}
+
+// 查询用户是否点赞评论 true 已点赞 false 未点赞
+func (r *lcRepository) IsLikeComment(db *gorm.DB, CommentID, userID int64) (bool, error) {
+	op := &model.UserLikeComment{}
+	err := db.Table("user_like_comments").Where("comment_id = ? and user_id = ?", CommentID, userID).First(&op).Error
+	// fmt.Println(op)
+	if err != nil {
+		// 如果记录不存在则没点赞
+		if err == gorm.ErrRecordNotFound {
+			logs.Logger.Error("如果记录不存在则没点赞", err)
+			return false, nil
+		} else {
+			logs.Logger.Error("查询用户是否点赞评论失败", err)
+			return false, err
+		}
+	}
+	if op.Status == 0 {
+		return false, nil
+	} else {
+		return true, nil
+	}
+}
+
+// 取消点赞评论
+func (r *lcRepository) CancelCommentLike(db *gorm.DB, CommentID, userID int64) error {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		op := &model.UserLikeComment{}
+		err1 := db.Table("user_like_comments").Where("comment_id = ? and user_id = ?", CommentID, userID).First(&op).Error
+		if err1 != nil {
+			return err1
+		}
+		op.Status = 0
+		if err := tx.Model(&model.UserLikeComment{}).Where("comment_id = ? and user_id = ?", CommentID, userID).Update("status", op.Status).Error; err != nil {
+			return err
+		}
+		comment := &model.Comment{}
+		if err := tx.Model(&model.Comment{}).Where("id = ?", CommentID).Find(comment).Error; err != nil {
+			return err
+		}
+		comment.LikeCount--
+		if err := tx.Model(&model.Comment{}).Where("id = ?", CommentID).Update("like_count", comment.LikeCount).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	return err
 }

@@ -25,6 +25,12 @@ type ArticleRequest struct {
 	Content string `json:"content"`
 }
 
+type UpdateArticleRequest struct {
+	ArticleID int64  `json:"article_id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+}
+
 // CommentRequest ...
 type CommentRequest struct {
 	UserID    int64  `json:"user_id"`

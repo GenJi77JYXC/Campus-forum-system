@@ -45,3 +45,63 @@ func GetComments(c *gin.Context) {
 	}
 	setAPIResponse(c, resp, "查询成功", true)
 }
+
+func GetLikeComments(c *gin.Context) {
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
+		return
+	}
+	id := c.Query("comments_id")
+	commentID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		setAPIResponse(c, nil, "参数错误", false)
+		return
+	}
+	resp, err := service.CommentService.LikeComment(commentID, user.ID)
+	if err != nil {
+		setAPIResponse(c, nil, err.Error(), false)
+		return
+	}
+	setAPIResponse(c, resp, "点赞成功", true)
+}
+
+func CancelCommentLike(c *gin.Context) {
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
+		return
+	}
+	id := c.Query("comments_id")
+	commentID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		setAPIResponse(c, nil, "参数错误", false)
+		return
+	}
+	resp, err := service.CommentService.UnlikeComment(commentID, user.ID)
+	if err != nil {
+		setAPIResponse(c, nil, err.Error(), false)
+		return
+	}
+	setAPIResponse(c, resp, "取消点赞成功", true)
+}
+
+func DeleteCommentByID(c *gin.Context) {
+	user, err1 := service.UserService.GetCurrentUser(c)
+	if user == nil || err1 != nil {
+		setAPIResponse(c, nil, err1.Error(), false)
+		return
+	}
+	id := c.Query("comment_id")
+	commentID, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		setAPIResponse(c, nil, "参数错误", false)
+		return
+	}
+	err = service.CommentService.DeleteComment(commentID, user.ID)
+	if err != nil {
+		setAPIResponse(c, nil, err.Error(), false)
+		return
+	}
+	setAPIResponse(c, nil, "删除成功", true)
+}

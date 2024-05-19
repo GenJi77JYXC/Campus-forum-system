@@ -36,6 +36,18 @@ func (r *articleRepository) GetArticleByID(db *gorm.DB, id int64) (*model.Articl
 	return r.take(db, "id = ?", id)
 }
 
+func (r *articleRepository) DeleteArticleByID(db *gorm.DB, id int64) error {
+	return db.Where("id = ?", id).Delete(&model.Article{}).Error
+}
+
+func (r *articleRepository) UpdateArticleByID(db *gorm.DB, articleID int64, title, content string) error {
+	err := db.Exec("update articles set title = ?, content = ? where id = ?", title, content, articleID).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (r *articleRepository) take(db *gorm.DB, column string, value interface{}) (*model.Article, error) {
 	result := new(model.Article)
 	if err := db.Where(column, value).Find(&result).Error; err != nil {

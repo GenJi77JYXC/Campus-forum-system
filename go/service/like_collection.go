@@ -32,12 +32,12 @@ func (s *lcService) PostLikeArticle(userID, articleID int64) error {
 	}
 	// 已经点赞成功
 	if opHis.Status == 1 {
-		return nil
+		return errors.New("已经点赞成功")
 	}
 	// Transaction:事务启动时将事务作为块处理，返回错误将回滚，否则要提交。事务在事务的fc中执行任意数量的命令。一旦成功，就会做出改变;如果发生错误，它们将被回滚。
 	err = database.GetDB().Transaction(func(tx *gorm.DB) error {
 		var err error
-		if opHis.ID == 0 {
+		if opHis.ID != 0 {
 			err = repository.LCRepository.UpdateUserLikeOperation(database.GetDB(), userID, articleID, map[string]interface{}{"status": 1})
 		} else {
 			err = repository.LCRepository.CreateLike(database.GetDB(), &model.UserLikeArticle{
@@ -51,12 +51,12 @@ func (s *lcService) PostLikeArticle(userID, articleID int64) error {
 			return err
 		}
 		// 更新文章的喜欢数量
-		err = database.GetDB().Exec("update article set like_count = like_count+1 where id = ?", articleID).Error
+		err = database.GetDB().Exec("update articles set like_count = like_count+1 where id = ?", articleID).Error
 		if err != nil {
 			return err
 		}
 		article, _ := repository.ArticleRepository.GetArticleByID(database.GetDB(), articleID)
-		err = database.GetDB().Exec("update user set be_liked_count = be_liked_count+1 where id = ?", article.UserID).Error
+		err = database.GetDB().Exec("update users set be_liked_count = be_liked_count+1 where id = ?", article.UserID).Error
 		return err
 	})
 	if err != nil {
@@ -92,7 +92,7 @@ func (s *lcService) PostDelLikeArticle(userID, articleID int64) error {
 
 	// 已经取消点赞
 	if opHis.Status == 0 {
-		return nil
+		return errors.New("已经取消点赞")
 	}
 
 	err = database.GetDB().Transaction(func(tx *gorm.DB) error {
@@ -101,12 +101,12 @@ func (s *lcService) PostDelLikeArticle(userID, articleID int64) error {
 		if err != nil {
 			return err
 		}
-		err = database.GetDB().Exec("update article set like_count = like_count-1 where id = ?", articleID).Error
+		err = database.GetDB().Exec("update articles set like_count = like_count-1 where id = ?", articleID).Error
 		if err != nil {
 			return err
 		}
 		article, _ := repository.ArticleRepository.GetArticleByID(database.GetDB(), articleID)
-		err = database.GetDB().Exec("update user set be_liked_count = be_liked_count-1 where id = ?", article.UserID).Error
+		err = database.GetDB().Exec("update users set be_liked_count = be_liked_count-1 where id = ?", article.UserID).Error
 		return err
 	})
 	if err != nil {
@@ -123,14 +123,14 @@ func (s *lcService) PostFavoriteArticle(userID, articleID int64) error {
 	}
 	// 已经收藏
 	if opHis.Status == 1 {
-		return nil
+		return errors.New("已经收藏")
 	}
 
 	err = database.GetDB().Transaction(func(tx *gorm.DB) error {
 		var err error
 		if opHis.ID != 0 {
 			err = repository.LCRepository.UpdateUserFavoriteOperation(database.GetDB(), userID, articleID, map[string]interface{}{"status": 1})
-			database.GetDB().Exec("update user_favorite_article set update_time = ? where id = ?", util.NowTimestamp(), opHis.ID)
+			database.GetDB().Exec("update user_favorite_articles set update_time = ? where id = ?", util.NowTimestamp(), opHis.ID)
 		} else {
 			err = repository.LCRepository.CreateFavorite(database.GetDB(), &model.UserFavoriteArticle{
 				UserID:     userID,
@@ -143,7 +143,7 @@ func (s *lcService) PostFavoriteArticle(userID, articleID int64) error {
 		if err != nil {
 			return err
 		}
-		err = database.GetDB().Exec("update user set favourite_article_count = favourite_article_count+1 where id = ?", userID).Error
+		err = database.GetDB().Exec("update users set favourite_article_count = favourite_article_count+1 where id = ?", userID).Error
 		return err
 	})
 	if err != nil {
@@ -161,7 +161,7 @@ func (s *lcService) PostDelFavoriteArticle(userID, articleID int64) error {
 
 	// 已经取消收藏
 	if opHis.Status == 0 {
-		return nil
+		return errors.New("已经取消收藏")
 	}
 
 	err = database.GetDB().Transaction(func(tx *gorm.DB) error {
@@ -170,7 +170,7 @@ func (s *lcService) PostDelFavoriteArticle(userID, articleID int64) error {
 		if err != nil {
 			return err
 		}
-		err = database.GetDB().Exec("update user set favourite_article_count = favourite_article_count-1 where id = ?", userID).Error
+		err = database.GetDB().Exec("update users set favourite_article_count = favourite_article_count-1 where id = ?", userID).Error
 		return err
 	})
 	if err != nil {

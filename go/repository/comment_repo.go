@@ -27,7 +27,7 @@ func (r *commentRepository) Create(db *gorm.DB, comment *model.Comment) error {
 // 获取评论列表 通过时间排序
 func (r *commentRepository) GetCommentsByCursorTime(db *gorm.DB, articleID, cursorTime int64) ([]model.Comment, error) {
 	var comments []model.Comment
-	err := db.Where("create_time < ?", cursorTime).Where("aritcle_id = ?", articleID).Limit(30).Find(&comments).Error
+	err := db.Where("create_time < ?", cursorTime).Where("article_id = ?", articleID).Limit(30).Find(&comments).Error
 	if err != nil {
 		logs.Logger.Errorf("GetCommentsByCursorTime: query db error: %v", err)
 		return nil, err
@@ -63,4 +63,14 @@ func (r *commentRepository) takeList(db *gorm.DB, column string, value interface
 		return nil, err
 	}
 	return comments, nil
+}
+
+// 删除评论
+func (r *commentRepository) DeleteCommentByID(db *gorm.DB, id int64) error {
+	err := db.Delete(&model.Comment{}, id).Error
+	if err != nil {
+		logs.Logger.Errorf("delete comment error: %v", err)
+		return err
+	}
+	return nil
 }
